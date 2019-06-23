@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="bootstrap.min.css">
+  <link rel="stylesheet" href="bootstrap-theme.min.css">
+  <link rel="stylesheet" href="main.css">
+  <script src="jquery-2.1.4.min.js"></script> 
+  <script src="bootstrap.min.js"></script>
+  <script src="sonar.js"></script>
+</head>
+
+<body>
+  <div class="sonarbooktemplate panel panel-default">
+    <div class="panel-heading">
+      <center><b>Find your fingerprint</b></center>
+    </div>
+    <div class="panel-body">
+      <center>
+        <button type="button" id="searchButton" class="btn btn-lg btn-info">Search for Resources</button>
+      </center>
+      <br>
+      <textarea class="code-output form-control" id="result" rows="3" required></textarea>
+      <br>
+      <textarea class="code-output form-control" id="deviceType" rows="1" placeholder="Enter Device Type Here" required></textarea>
+      <center>
+        <button type="button" id="submitButton" class="btn btn-lg btn-info">Submit fingerprint</button>
+      </center>
+    </div>
+  </div>
+  <script src="popup.js"></script>
+</body>
+
+</html>
