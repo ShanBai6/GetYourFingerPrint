@@ -31,9 +31,9 @@ function addFingerprint() {
 
 function getResponse() {
   //receive as string
-
   console.log(this.responseText)
-  console.log("WHAT?")
+
+  //TODO: Process this to update the db.
 }
 
 function searchFingerprint() {

@@ -247,7 +247,9 @@ var sonar = {
         if( sonar.scans[ id ].resources[ sonar.scans[ id ].resources.length - 1 ] == resource ) {
             if( sonar.debug ) {
                 //document.getElementById('result').innerHTML += '[DEBUG][' + id + '] Found "' + sonar.scans[ id ].name + '" at ' + ip + '\n';
-                document.getElementById("deviceType").innerHTML += 'Possible device ' + sonar.scans[id].name + ' found at ip ' + ip + '\n'
+                if (!document.getElementById('deviceType').innerHTML.includes(sonar.scans[id].name)) {   
+                    document.getElementById('deviceType').innerHTML += 'Possible device ' + sonar.scans[id].name + ' found at ip ' + ip + '\n'
+                }
                 //alert( '[DEBUG][' + id + '] Found "' + sonar.scans[ id ].name + '" at ' + ip );
             }
 
@@ -397,13 +399,16 @@ var sonar = {
         return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
         s4() + '-' + s4() + s4() + s4();
     },
-
     //walk the DOM and process the results.
     'processHTML': function() {
         //console.log("DOM is as follows: ")
-        //console.log(this.responseText);
+        console.log(this.responseText);
         var data = this.responseText
-        
+        //there should be only one ip
+        var fromURL = this.responseURL
+        var ip = fromURL.match(/\/\/[\S\s]*\//)
+        ip = ip[0].replace(/\//g, "")
+        //console.log("IP: " + ip)
         //console.log("Resource FOUND: ")
         //add these to the results
         var arrayOfResource = data.match(/src=[\S]*\s/)
@@ -411,14 +416,18 @@ var sonar = {
             item = item.replace("src=", "")
             item = item.replace(/["]/g, "")
             //console.log(item);
-            document.getElementById('result').innerHTML += item + "\n"
+            if (!document.getElementById('result').innerHTML.includes(item)) {   
+                document.getElementById('result').innerHTML += item + " at " + ip + "\n"
+            }
         });
         arrayOfResource = data.match(/href=[\S]*\s/)
         arrayOfResource.forEach(function (item, index) {
             item = item.replace("href=", "")
             item = item.replace(/["]/g, "")
             //console.log(item);
-            document.getElementById('result').innerHTML += item + "\n"
+            if (!document.getElementById('result').innerHTML.includes(item)) {   
+                document.getElementById('result').innerHTML += item + " at " + ip + "\n"
+            }
         });
 
           
@@ -461,8 +470,9 @@ var sonar = {
             element.remove();
             sonar.internal_host_manager( ip, resource, id, otherProps, false );
             //console.log("resource loaded: " + resource)
-            document.getElementById('result').innerHTML += resource + "\n"
-
+            if (!document.getElementById('result').innerHTML.includes(resource)) {   
+                document.getElementById('result').innerHTML += resource + " at " + ip + "\n"
+            }
             //sending get request for the DOM
             //console.log("sending GET to ip" + ip)
             xhr = new XMLHttpRequest();
